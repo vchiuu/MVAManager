@@ -29,12 +29,12 @@ def home():
 def about():
   return render_template('about.html', title='About')
 
-@app.route('register')
+@app.route('/register')
 def registration():
   form = registrationForm()
   return render_template('register.html', title='Register', form=form)
 
-@app.route('login')
+@app.route('/login')
 def login():
     form = loginForm()
     return render_template('login.html', title='Login', form=form)
