@@ -15,3 +15,7 @@ Flask Forms
 ```
 pip install flask-wtf
 ```
+Flask SQLAlchemy
+```
+pip install flask-sqlalchemy
+```
