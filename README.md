@@ -1,4 +1,4 @@
-# MVA Manager
+ MVA Manager
 The application is designed to aid clinics manage Motor Vehicle Accident patients to ensure the required appointments are scheduled and, paperwork and billing is completed in a timely manner. 
 
 ## Motor Vehicle Accident Coverage
@@ -22,16 +22,16 @@ If the patient requires further treatment after the first 12 weeks of treatment,
 Note: During the first 12-weeks, number appointments may vary depending on the rates which the clinic decides to charge.
 The following rates apply during extended treatment or, when patient has their own Extended Health Care (EHC) Benefits.
 
-|       Treatment Type       | Cost  |
-| :-------------------------:| ----: |
-| Chiropractic               | $     |
-| Physiotherapy              | $     |
-| Registered Massage Therapy | $     |
+|       Treatment Type       | Cost     |
+| :-------------------------:| -------: |
+| Chiropractic               | $ 112.81 |
+| Physiotherapy              | $  99.75 |
+| Registered Massage Therapy | $  58.19 |
 
 # Screenshots 
 
 # MVA Manager Database Design
-
+<kbd>![MVA Manager ERD Design](https://github.com/vchiuu/MVAManager/blob/master/MVAManager_ERD.jpg)</kbd>
 # Using Flask
 
 Create & Activate your Virtual Environment
