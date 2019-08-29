@@ -23,7 +23,7 @@ class Post(db.Model):
     return f"Post('{self.title}', '{self.date_posted}') "
 
 class Patient(db.Model):
-  id = db.Column(db.Integer, primary_key=True)
+  patientID = db.Column(db.Integer, primary_key=True)
   firstName = db.Column(db.String, nullable=False)
   lastName = db.Column(db.String, nullable=False)
   dateofBirth = db.Column(db.DateTime, nullable=False)
@@ -32,11 +32,10 @@ class Patient(db.Model):
   appointments = db.relationship('Appointment', backref='patient', lazy=True)
 
 class Appointment(db.Model):
-   id = db.Column(db.Integer, primary_key=True)
+   appointmentID = db.Column(db.Integer, primary_key=True)
    appointmentDate = db.Column(db.DateTime, nullable=False)
    treatment = db.Column(db.String(20), nullable=False)
 
 class Treatment(db.Model):
-  id = db.Column(db.Integer, primary_key=True)
+  treatmentID = db.Column(db.Integer, primary_key=True)
   trtType = db.Column(db.Integer, priamry_key=True)
-  practitioner =  db.
