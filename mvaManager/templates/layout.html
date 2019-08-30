@@ -28,10 +28,25 @@
               <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('about') }}">About</a>
               </li>
+              {% if current_user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('clinicboard')}}">Clinic Board</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('patients') }}"> Patients </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('reports') }}"> Reports </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('tasks')}}"> Tasks </a>
+              </li>
+              {% endif %}
             </ul>
         </div>
         <form class="navbar-form navbar-right">
           {% if current_user.is_authenticated %}
+            <a href="{{ url_for('account')}}"> Account </a>
             <a href="{{ url_for('logout') }}" class="btn btn-primary"> Log Out</a>
           {% else %}
             <a href="{{ url_for('registration') }}" class="btn btn-success">Register</a>

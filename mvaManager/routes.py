@@ -1,8 +1,8 @@
-from flask import render_template, url_for, flash, redirect
+from flask import render_template, url_for, flash, redirect, request
 from mvaManager import app, db, bcrypt
 from mvaManager.forms import registrationForm, loginForm
 from mvaManager.models import User, Post
-from flask_login import login_user, current_user, logout_user
+from flask_login import login_user, current_user, logout_user, login_required
 
 posts = [
   {
@@ -47,7 +47,8 @@ def login():
       user = User.query.filter_by(username=form.username.data).first()
       if user and bcrypt.check_password_hash(user.password, form.password.data):
         login_user(user, remember=form.remember.data)
-        return redirect(url_for('home'))
+        next_page = request.args.get('next')
+        return redirect(next_page) if next_page else redirect(url_for('home')) #ternar conditional in python
       else:
         flash('Login unsuccessful. Please check username and/or password', 'danger')
 
@@ -58,3 +59,24 @@ def logout():
   logout_user()
   return redirect(url_for('home'))
 
+@app.route('/account')
+@login_required
+def account():
+  image_file = url_for('static', filename='profile_pictures/' + current_user.image_file)
+  return render_template('account.html', title='Account', image_file = image_file)
+
+@app.route('/clinicboard')
+def clinicboard():
+  return render_template('clinicboard.html', title='Clinic Board')
+
+@app.route('/patients')
+def patients():
+  return render_template('patients.html', title='Patients')
+
+@app.route('/reports')
+def reports():
+  return render_template('reports.html', title='Reports')
+
+@app.route('/tasks')
+def tasks():
+  return render_template('tasks.html', title='Tasks')
