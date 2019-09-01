@@ -1,4 +1,25 @@
 {% extends "layout.html" %}
   {% block content %}   
-  <h1> Reports </h1>
+  <h1 style="text-align:center"> Reports </h1>
+  <div class="container">
+    <div class="row">
+        <div class="col-md-6">
+          {% block reports %}
+          {% endblock %}
+        </div>
+        <div class="col-md-4 offset-md-1">
+          <div class="card text-center">
+            <div class="card-header"> Additional Reports</div>
+            <div class="card-body">
+              <a href="#" class="btn btn-outline-secondary btn-block"> Report #1 </a>
+              <a href="#" class="btn btn-outline-secondary btn-block"> Report #2 </a>
+              <a href="#" class="btn btn-outline-secondary btn-block"> Report #3 </a>
+              <a href="#" class="btn btn-outline-secondary btn-block"> Report #4 </a>
+            </div>
+            <div class="card-footer text-muted"> <small>MVA Manager 2019</small></div>
+            
+          </div>
+        </div>
+    </div>
+  </div>
   {% endblock content %}

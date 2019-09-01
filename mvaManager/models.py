@@ -9,6 +9,8 @@ def load_user(user_id):
 class User(db.Model, UserMixin):
   id = db.Column(db.Integer, primary_key=True)
   username = db.Column(db.String(20), unique=True, nullable=False)
+  firstname = db.Column(db.String(20), nullable=False)
+  lastname = db.Column(db.String(20), nullable=False)
   email = db.Column(db.String(120), unique=True, nullable=False)
   image_file = db.Column(db.String(20), nullable=False, default='default.jpg')
   password = db.Column(db.String(60), nullable=False)
@@ -26,3 +28,14 @@ class Post(db.Model):
   
   def __repr__(self):
     return f"Post('{self.title}', '{self.date_posted}') "
+
+class Patient(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  pFirstName = db.Column(db.String(20), nullable=False)
+  pLastName = db.Column(db.String(20), nullable=False)
+  pPhone = db.Column(db.String(20))
+  pEmailAddress = db.Column(db.String(35))
+  pDOB = db.Column(db.DateTime)
+  pIncidentDate = db.Column(db.DateTime, nullable=False)
+  pClaimNumber = db.Column(db.Integer, nullable=False)
+  pScheduleID = db.Column(db.Integer, unique=True, nullable=False)

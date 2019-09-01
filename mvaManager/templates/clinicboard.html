@@ -1,8 +1,21 @@
 {% extends "layout.html" %}
-  {% block content %}    
+  {% block content %}
+  <br>
+  <div class="content-section">
+  <div class="row">
+    <div class="col-md-6">
+      <h1>Clinic Board</h1>
+    </div>
+    <div class="col-md-6">
+      <div class="text-right">
+        <a class="btn btn-success" href="{{ url_for('new_post')}}"> + </a></td>
+      </div>
+    </div>
+  </div>
     {% for post in posts %}
       <h2>{{ post.title }}</h2>
       <p> By {{ post.author }} on {{ post.date_posted}}</p>
       <p>{{ post.content }}</p>
     {% endfor %}
+  </div>
   {% endblock content %}

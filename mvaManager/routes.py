@@ -1,28 +1,16 @@
+import os 
+import secrets
+from PIL import Image
 from flask import render_template, url_for, flash, redirect, request
 from mvaManager import app, db, bcrypt
-from mvaManager.forms import registrationForm, loginForm
-from mvaManager.models import User, Post
+from mvaManager.forms import registrationForm, loginForm, updateAccountForm, postForm, newPatientForm
+from mvaManager.models import User, Post, Patient
 from flask_login import login_user, current_user, logout_user, login_required
-
-posts = [
-  {
-    'author': 'Vivian Chiu', 
-    'title': 'Blog Post 1', 
-    'content': 'First Post Content', 
-    'date_posted': 'August 12th 2019'
-  }, 
-  {
-    'author': 'John Smith', 
-    'title': 'Blog Post 2', 
-    'content': 'Second Post Content', 
-    'date_posted': 'August 15th 2019'
-  }
-]
 
 @app.route('/')
 @app.route('/home')
 def home():
-  return render_template('home.html', posts=posts)
+  return render_template('home.html')
 
 @app.route('/about')
 def about():
@@ -33,7 +21,8 @@ def registration():
   form = registrationForm()
   if form.validate_on_submit():
     hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-    user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+    user = User(username=form.username.data, firstname= form.firstname.data, lastname = form.lastname.data, 
+                email=form.email.data, password=hashed_password)
     db.session.add(user)
     db.session.commit()
     flash('You account has been created! You are now able to login.', 'success')
@@ -48,7 +37,7 @@ def login():
       if user and bcrypt.check_password_hash(user.password, form.password.data):
         login_user(user, remember=form.remember.data)
         next_page = request.args.get('next')
-        return redirect(next_page) if next_page else redirect(url_for('home')) #ternar conditional in python
+        return redirect(next_page) if next_page else redirect(url_for('home')) #ternary conditional in python
       else:
         flash('Login unsuccessful. Please check username and/or password', 'danger')
 
@@ -59,19 +48,66 @@ def logout():
   logout_user()
   return redirect(url_for('home'))
 
-@app.route('/account')
+def save_picture(form_picture):
+  image_name = secrets.token_hex(8)
+  _, f_ext = os.path.splitext(form_picture.filename)
+  picture_filename = image_name + f_ext
+  picture_path = os.path.join(app.root_path, 'static/profile_pictures', 'picture_filename')
+  output_size = (125, 125)
+  i = Image.open(form.picture)
+  i.thumbnail(output_size)
+  i.save(picture_path)
+  return picture_filename
+
+@app.route('/account', methods=['GET', 'POST'])
 @login_required
 def account():
+  form = updateAccountForm()
+  if form.validate_on_submit():
+    if form.picture.data:
+      picture_file = save_picture(form.picture.data)
+      current_user.image_file = picture_file
+    current_user.username = form.username.data
+    current_user.firstname = form.firstname.data
+    current_user.lastname = form.lastname.data
+    current_user.email = form.email.data
+    db.session.commit()
+    flash('Your account has been updated.', 'success')
+    return redirect( url_for('account') )
+  elif request.method == 'GET':
+    form.username.data = current_user.username
+    form.firstname.data = current_user.firstname
+    form.lastname.data = current_user.lastname
+    form.email.data = current_user.email
   image_file = url_for('static', filename='profile_pictures/' + current_user.image_file)
-  return render_template('account.html', title='Account', image_file = image_file)
+  return render_template('account.html', title='Account', image_file = image_file, form=form)
+
+@app.route('/settings')
+def settings():
+  return render_template('settings.html', title="Settings")
 
 @app.route('/clinicboard')
 def clinicboard():
-  return render_template('clinicboard.html', title='Clinic Board')
+  posts = Post.query.all()
+  return render_template('clinicboard.html', title='ClinicBoard', posts=posts)
+
+@app.route('/clinicboard/newpost', methods=['GET', 'POST'])
+@login_required
+def new_post():
+  form = postForm()
+  if form.validate_on_submit():
+    post = Post(title=form.title.data, content=form.content.data, author=current_user)
+    db.session.add(post)
+    db.session.commit()
+    flash('Post created!', 'success')
+    return redirect( url_for('clinicboard'))
+  return render_template('createpost.html', title='New Post', form=form)
+
 
 @app.route('/patients')
 def patients():
-  return render_template('patients.html', title='Patients')
+  patients = Patient.query.all()
+  return render_template('patients.html', title='Patients', patients=patients)
 
 @app.route('/reports')
 def reports():
@@ -80,3 +116,15 @@ def reports():
 @app.route('/tasks')
 def tasks():
   return render_template('tasks.html', title='Tasks')
+
+@app.route('/patients/addPatient', methods=['GET', 'POST'])
+def addPatient():
+  form = newPatientForm()
+  if form.validate_on_submit():
+    patient = Patient(pFirstName = form.pFirstName.data, pLastName= form.pLastName.data, pDOB=form.pDOB.data, 
+      pIncidentDate=form.pIncidentDate.data, pClaimNumber=form.pClaimNumber.data, pScheduleID=form.pScheduleID.data)
+    db.session.add(patient)
+    db.session.commit()
+    flash('Patient has been added.', 'success')
+    return redirect( url_for('patients'))
+  return render_template('addpatient.html', title='AddPatient', form=form)

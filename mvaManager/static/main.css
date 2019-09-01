@@ -1,5 +1,17 @@
-.form-label {
-  font-family: "arial", sans-serif;
-  text-transform: uppercase;
-  font-weight: bold;
+.content-section {
+  background: #ffffff;
+  padding: 10px 20px;
+  border: 1px solid #dddddd;
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+
+.bottom-text {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.subheading-title {
+  text-align: center;
 }

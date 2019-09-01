@@ -1,4 +1,61 @@
 {% extends "layout.html" %}
   {% block content %}   
-  <h1> Tasks </h1>
+  <br>
+  <h1 style="text-align:center"> Tasks </h1>
+  <hr>
+  <div class="row">
+      <div class="col-md-4">
+        <div class="subheading-title">
+          <h3>4</h2>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="subheading-title">
+          <h3>1</h2>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="subheading-title">
+          <h3>0</h2>
+        </div>
+      </div>
+    </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="subheading-title">
+        Upcoming Tasks
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="subheading-title">
+        Tasks Due Today
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="subheading-title">
+        Past Due Tasks
+      </div>
+    </div>
+  </div>
+  <hr>
+  <table>
+    <thead>
+      <tr>
+        <td> Task </td>
+        <td> Patient </td>
+        <td> Due Date </td>
+        <td> Completed? </td>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- {% for task in tasks %}
+      <tr>
+        <td> {{ task.taskname }} </td>
+        <td> {{ task.patient }} </td>
+        <td> {{ task.dueDate }} </td>
+        <td> {{ task.isCompleted }}</td>
+      </tr>
+      {% endfor %} -->
+    </tbody>
+  </table>
   {% endblock content %}

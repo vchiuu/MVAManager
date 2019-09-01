@@ -1,0 +1,102 @@
+{% extends "layout.html" %}
+  {% block content %}
+    <br>    
+    <h1 style="text-align:center"> New Patient</h1>
+    <hr>
+    <div>
+      <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+          <div class= "row">
+            <div class="col-md-4">
+              <div class="form-group">
+                {% if form.pFirstName.errors %}
+                {{ form.pFirstName(class="form-control is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.pFirstName.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+              {% else %}
+                {{ form.pFirstName.label(style="font-size: 85%") }}
+                {{ form.pFirstName(class="form-control") }}
+              {% endif %}
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                {% if form.pLastName.errors %}
+                  {{ form.pLastName(class="form-control is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.pLastName.errors %}
+                      <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  {{ form.pLastName.label(style="font-size: 85%") }}
+                  {{ form.pLastName(class="form-control") }}
+                {% endif %}
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                {% if form.pDOB.errors %}
+                  {{ form.pDOB.label(style="font-size: 85%")}}
+                  {{ form.pDOB(class="form-control is-invalid") }}
+                  <div class="invalid-feedback">
+                    {% for error in form.pDOB.errors %}
+                      <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  {{ form.pDOB.label(style="font-size: 85%")}}
+                  {{ form.pDOB(class="form-control")}}
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                {{ form.pPhone.label(style="font-size: 85%") }}
+                {{ form.pPhone(class="form-control")}}
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                {{ form.pEmail.label(style="font-size: 85%") }}
+                {{ form.pEmail(class="form-control")}}
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                {{ form.pIncidentDate.label(style="font-size: 85%")}}
+                {{ form.pIncidentDate(class="form-control") }}
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                {{ form.pClaimNumber.label(style="font-size: 85%") }}
+                {{ form.pClaimNumber(class="form-control") }}
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                {{ form.pScheduleID.label(style="font-size: 85%") }}
+                {{ form.pScheduleID(class="form-control")}}
+              </div>
+            </div>
+          </div>
+        </fieldset>
+        <div class="text-right">
+          <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+          </div>
+        </div>
+      </form>
+    </div>
+  {% endblock content %}
