@@ -1,10 +1,10 @@
 import os 
 import secrets
 from PIL import Image
-from flask import render_template, url_for, flash, redirect, request
+from flask import render_template, url_for, flash, redirect, request, abort
 from mvaManager import app, db, bcrypt
-from mvaManager.forms import registrationForm, loginForm, updateAccountForm, postForm, newPatientForm
-from mvaManager.models import User, Post, Patient
+from mvaManager.forms import registrationForm, loginForm, updateAccountForm, postForm, newPatientForm, newPractitionerForm
+from mvaManager.models import User, Post, Patient, Practitioner
 from flask_login import login_user, current_user, logout_user, login_required
 
 @app.route('/')
@@ -54,7 +54,7 @@ def save_picture(form_picture):
   picture_filename = image_name + f_ext
   picture_path = os.path.join(app.root_path, 'static/profile_pictures', 'picture_filename')
   output_size = (125, 125)
-  i = Image.open(form.picture)
+  i = Image.open(form_picture)
   i.thumbnail(output_size)
   i.save(picture_path)
   return picture_filename
@@ -86,6 +86,28 @@ def account():
 def settings():
   return render_template('settings.html', title="Settings")
 
+@app.route('/settings/practitioners')
+def practitioners():
+  practitioners = Practitioner.query.all()
+  return render_template('practitioners.html', title="Practitioners", practitioners=practitioners)
+
+@app.route('/settings/addpractitioner')
+def addpractitioner():
+  form = newPractitionerForm()
+  if form.validate_on_submit():
+    practitioner = Practitioner(firstName = form.firstName.data, lastName = form.lastName.data, 
+                                practice = form.practice.data, claimNumber = form.claimNumber.data)
+    db.session.add(practitioner)
+    db.session.commit()
+    flash('Practitioner sucessfully added!', 'success')
+    return redirect( url_for('practitioners') )
+  return render_template('addpractitioner.html', title="Add Practitioner", form=form)
+
+@app.route('/settings/<int:practitioner_id>')
+def practitioner(practitioner_id):
+  practitioner = Practitioner.query_get_or_404(practitioner_id)
+  return render_template('practitioner.html', title="Practitioner", practitioner=practitioner)
+
 @app.route('/clinicboard')
 def clinicboard():
   posts = Post.query.all()
@@ -101,8 +123,41 @@ def new_post():
     db.session.commit()
     flash('Post created!', 'success')
     return redirect( url_for('clinicboard'))
-  return render_template('createpost.html', title='New Post', form=form)
+  return render_template('createpost.html', title='New Post', form=form, legend='New Post')
 
+@app.route('/clinicboard/<int:post_id>')
+def post(post_id):
+  post = Post.query.get_or_404(post_id)
+  return render_template('post.html', title=post.title, post=post)
+
+@app.route('/clinicboard/<int:post_id>/update', methods=['GET', 'POST'])
+@login_required
+def updatepost(post_id):
+  post= Post.query.get_or_404(post_id)
+  if post.author != current_user:
+    abort(403)
+  form = postForm()
+  if form.validate_on_submit():
+    post.title = form.title.data
+    post.content = form.content.data
+    db.session.commit()
+    flash('Your post has been updated', 'success')
+    return redirect( url_for('post', post_id=post.id))
+  elif request.method == 'GET':
+    form.title.data = post.title
+    form.content.data = post.content
+  return render_template('createpost.html', title='Update Post', form=form, legend='Update Post')
+
+@app.route('/clinicboard/<int:post_id>/delete', methods=['POST'])
+@login_required
+def deletepost(post_id):
+  post = Post.query.get_or_404(post_id)
+  if post.author != current_user:
+    abort(403)
+  db.session.delete(post)
+  db.session.commit()
+  flash('Your post has been deleted', 'success')
+  return redirect(url_for('clinicboard'))
 
 @app.route('/patients')
 def patients():

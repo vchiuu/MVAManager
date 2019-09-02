@@ -1,12 +1,13 @@
 {% extends "layout.html" %}
   {% block content %}   
+  <br>
   <h1 style="text-align: center"> Settings </h1>
   <div class="row">
       <div class="col-md-3 offset-md-.5">
         <div class="card text-center">
           <div class="card-header"> Options: </div>
           <div class="card-body">
-            <a href="#" class="btn btn-outline-secondary btn-block"> Practitioners </a>
+            <a href="{{ url_for('practitioners')}}" class="btn btn-outline-secondary btn-block"> Practitioners </a>
             <a href="#" class="btn btn-outline-secondary btn-block"> Services & Fees</a>
             <a href="#" class="btn btn-outline-secondary btn-block"> Appointment Schedule </a>
             <a href="#" class="btn btn-outline-secondary btn-block"> Preferences </a>
@@ -14,7 +15,7 @@
           <div class="card-footer text-muted"> <small>MVA Manager 2019</small></div>
         </div>
       </div>
-    <div class="col-md-6">
+    <div class="col-md-8">
       {% block settings %}
       {% endblock %}
     </div>

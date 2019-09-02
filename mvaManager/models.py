@@ -39,3 +39,45 @@ class Patient(db.Model):
   pIncidentDate = db.Column(db.DateTime, nullable=False)
   pClaimNumber = db.Column(db.Integer, nullable=False)
   pScheduleID = db.Column(db.Integer, unique=True, nullable=False)
+
+
+class Practitioner(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  firstName = db.Column(db.String(20), nullable=False)
+  lastName = db.Column(db.String(20), nullable=False)
+  practice = db.Column(db.String(20), nullable=False)
+  certificateNumber = db.Column(db.String(10), nullable=False)
+
+class TreatmentType(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  trtType = db.Column(db.String(15), primary_key=True)
+
+class AppointmentsByBlock(db.Model):
+  blockNumber = db.Column(db.Integer, primary_key=True)
+  numofAppointments = db.Column(db.Integer, nullable=False)
+
+class Practice(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  practice = db.Column(db.String(20), nullable=False)
+
+class Appointment(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  appointmentDate = db.Column(db.DateTime, nullable=False)
+
+class Paperwork(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  formType = db.Column(db.String(7), nullable=False)
+  formName = db.Column(db.String(30), nullable=False)
+  isRequired = db.Column(db.Boolean)
+  isComplete = db.Column(db.Boolean)
+
+class BillingSchedule(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  endBlock1 = db.Column(db.DateTime)
+  endBlock2 = db.Column(db.DateTime)
+  endBlock3 = db.Column(db.DateTime)
+  extensionID = db.Column(db.Integer)
+
+class ExtendedBillingSchedule(db.Model):
+  id = db.Column(db.Integer, primary_key=True)
+  amountApproved = db.Column(db.Integer, nullable=False)

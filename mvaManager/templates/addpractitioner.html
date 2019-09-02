@@ -1,0 +1,63 @@
+{% extends "settings.html" %}
+  {% block settings %}
+  <br>
+  <h3> Add Practitioner </h3>  
+  <form method="POST" action="">
+    {{ form.hidden_tag() }}
+    <fieldset class="form-group">
+      <div class= "row">
+        <div class="col-md-6">
+          <div class="form-group">
+            {% if form.firstName.errors %}
+              {{ form.firstName(class="form-control is-invalid") }}
+              <div class="invalid-feedback">
+                {% for error in form.firstName.errors %}
+                  <span>{{ error }}</span>
+                {% endfor %}
+              </div>
+            {% else %}
+              {{ form.firstName.label(style="font-size: 85%") }}
+              {{ form.firstName(class="form-control") }}
+            {% endif %}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            {% if form.lastName.errors %}
+              {{ form.lastName(class="form-control is-invalid") }}
+              <div class="invalid-feedback">
+              {% for error in form.lastName.errors %}
+                <span>{{ error }}</span>
+              {% endfor %}
+              </div>
+            {% else %}
+              {{ form.lastName.label(style="font-size: 85%") }}
+              {{ form.lastName(class="form-control") }}
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            {{ form.practice.label(style="font-size: 85%") }}
+            {{ form.practice(class="form-control")}}
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            {{ form.certificateNumber.label(style="font-size: 85%") }}
+            {{ form.certificateNumber(class="form-control")}}
+          </div>
+        </div>
+      </div>
+    </fieldset>
+    <div class="text-right">
+      <div class="form-group">
+        {{ form.submit(class="btn btn-outline-info") }}
+      </div>
+    </div>
+  </form>
+</div>
+  
+  {% endblock %}

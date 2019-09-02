@@ -15,3 +15,9 @@
 .subheading-title {
   text-align: center;
 }
+
+.article-img {
+  height: 65px;
+  width: 65px;
+  margin-right: 16px;
+}

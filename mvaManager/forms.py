@@ -61,3 +61,10 @@ class newPatientForm(FlaskForm):
   pClaimNumber = IntegerField('Claim Number', validators=[DataRequired()])
   pScheduleID = IntegerField('Schedule ID', validators=[DataRequired()], )
   submit = SubmitField('Add Patient')
+
+class newPractitionerForm(FlaskForm):
+  firstName = StringField('First Name', validators=[DataRequired()], render_kw={"placeholder": "First Name"})
+  lastName = StringField('Last Name', validators=[DataRequired()], render_kw={"placeholder": "Last Name"})
+  practice = StringField('Practice', validators=[DataRequired()], render_kw={"placeholder": "Type of Practice"})
+  certificateNumber = StringField('Certificate Number', validators=[DataRequired()], render_kw={"placeholder": "Certificate Number"})
+  submit = SubmitField('Add Practitioner')

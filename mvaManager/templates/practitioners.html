@@ -1,0 +1,11 @@
+{% extends "settings.html" %}
+  {% block settings %}
+  <br>
+  <table class="table">
+    <tr>
+      <td> <h3> Practitioners </h3></td>
+      <td style="text-align:right"> <a class="btn btn-success" href="{{ url_for('addpractitioner')}}"> + </a></td>
+    </tr>
+  </table>
+  
+  {% endblock %}
