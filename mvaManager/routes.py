@@ -82,6 +82,10 @@ def account():
   image_file = url_for('static', filename='profile_pictures/' + current_user.image_file)
   return render_template('account.html', title='Account', image_file = image_file, form=form)
 
+# ----------------------------------------------------------------------------------------------
+# **************************************** Settings ********************************************
+# ----------------------------------------------------------------------------------------------
+
 @app.route('/settings')
 def settings():
   return render_template('settings.html', title="Settings")
@@ -108,9 +112,13 @@ def practitioner(practitioner_id):
   practitioner = Practitioner.query_get_or_404(practitioner_id)
   return render_template('practitioner.html', title="Practitioner", practitioner=practitioner)
 
+# ----------------------------------------------------------------------------------------------
+# ********************************* Clinic Board & Posts ***************************************
+# ----------------------------------------------------------------------------------------------
 @app.route('/clinicboard')
 def clinicboard():
-  posts = Post.query.all()
+  page = request.args.get('page', 1, type=int)
+  posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page,per_page=10)
   return render_template('clinicboard.html', title='ClinicBoard', posts=posts)
 
 @app.route('/clinicboard/newpost', methods=['GET', 'POST'])
@@ -159,6 +167,17 @@ def deletepost(post_id):
   flash('Your post has been deleted', 'success')
   return redirect(url_for('clinicboard'))
 
+@app.route('/user/<string:username>')
+def user_posts(username):
+  page = request.args.get('page', 1, type=int)
+  user = User.query.filter_by(username=username).first_or_404()
+  posts = Post.query.filter_by(author=user)\
+    .order_by(Post.date_posted.desc())\
+    .paginate(page=page, per_page=10)
+  return render_template('userPosts.html', posts=posts, user=user)
+# ----------------------------------------------------------------------------------------------
+# ************************************** Patients **********************************************
+# ----------------------------------------------------------------------------------------------
 @app.route('/patients')
 def patients():
   patients = Patient.query.all()
