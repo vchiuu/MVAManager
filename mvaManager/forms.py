@@ -46,6 +46,20 @@ class updateAccountForm(FlaskForm):
       if email:
        raise ValidationError('Email has already been used. Please use a different email.')
 
+class requestResetForm(FlaskForm):
+  email = StringField('Email', validators=[DataRequired(), Email()])
+  submit = SubmitField('Request Password Reset')
+  
+  def validate_email(self, email):
+    email = User.query.filter_by(email=email.data).first()
+    if email is None:
+      raise ValidationError('There is no account with that email. Please register first.')
+
+class resetPasswordForm(FlaskForm):
+  password = PasswordField('Password', validators=[DataRequired(), Length(min=8)], render_kw={"placeholder": " Password"})
+  confirmPassword = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')], render_kw={"placeholder": " Confirm Password"})
+  submit = SubmitField('Reset Password')
+
 class postForm(FlaskForm):
   title = StringField('Title', validators=[DataRequired()], render_kw={"placeholder": "Title"})
   content = TextAreaField('Content', validators=[DataRequired()], render_kw={"placeholder": "What's on your mind?"})

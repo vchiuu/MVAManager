@@ -3,7 +3,8 @@ import secrets
 from PIL import Image
 from flask import render_template, url_for, flash, redirect, request, abort
 from mvaManager import app, db, bcrypt
-from mvaManager.forms import registrationForm, loginForm, updateAccountForm, postForm, newPatientForm, newPractitionerForm
+from mvaManager.forms import (registrationForm, loginForm, updateAccountForm, requestResetForm, resetPasswordForm, 
+                              postForm, newPatientForm, newPractitionerForm)
 from mvaManager.models import User, Post, Patient, Practitioner
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -42,6 +43,13 @@ def login():
         flash('Login unsuccessful. Please check username and/or password', 'danger')
 
     return render_template('login.html', title='Login', form=form)
+
+@app.route('/reset_password', methods=['GET', 'POST'])
+def rest_request():
+  if current_user.is_authenticated:
+    return redirect(url_for('home'))
+    form= requestResetForm()
+    return render_template('resetRequest.html', title='Reset Password', form=form)
 
 @app.route('/logout')
 def logout():
