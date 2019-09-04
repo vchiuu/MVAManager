@@ -1,9 +1,9 @@
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
-from flask_login import current_user
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, DateField, IntegerField, TextAreaField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, FileField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from mvaManager.models import User, Patient
+from flask_login import current_user
+from mvaManager.models import User
 
 class registrationForm(FlaskForm):
   username = StringField('Username', validators=[DataRequired(), Length(min=8, max=16)], render_kw ={"placeholder":" Username"})
@@ -59,26 +59,3 @@ class resetPasswordForm(FlaskForm):
   password = PasswordField('Password', validators=[DataRequired(), Length(min=8)], render_kw={"placeholder": " Password"})
   confirmPassword = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')], render_kw={"placeholder": " Confirm Password"})
   submit = SubmitField('Reset Password')
-
-class postForm(FlaskForm):
-  title = StringField('Title', validators=[DataRequired()], render_kw={"placeholder": "Title"})
-  content = TextAreaField('Content', validators=[DataRequired()], render_kw={"placeholder": "What's on your mind?"})
-  submit = SubmitField('Post')
-
-class newPatientForm(FlaskForm):
-  pFirstName = StringField('First Name', validators=[DataRequired()], render_kw={"placeholder": "First Name"})
-  pLastName = StringField('Last Name', validators=[DataRequired()], render_kw={"placeholder": "Last Name"})
-  pPhone = StringField('Phone Number', render_kw={"placeholder": "(123) 456-7890"})
-  pEmail = StringField('Email', render_kw={"placeholder": "patient@email.com"})
-  pDOB = DateField('Date of Birth', validators=[DataRequired()], format='%d-%m-%Y', render_kw={"placeholder": "DD-MM-YY"})
-  pIncidentDate = DateField('Date of Accident', validators=[DataRequired()], format='%d-%m-%Y', render_kw={"placeholder": "DD-MM-YY"})
-  pClaimNumber = IntegerField('Claim Number', validators=[DataRequired()])
-  pScheduleID = IntegerField('Schedule ID', validators=[DataRequired()], )
-  submit = SubmitField('Add Patient')
-
-class newPractitionerForm(FlaskForm):
-  firstName = StringField('First Name', validators=[DataRequired()], render_kw={"placeholder": "First Name"})
-  lastName = StringField('Last Name', validators=[DataRequired()], render_kw={"placeholder": "Last Name"})
-  practice = StringField('Practice', validators=[DataRequired()], render_kw={"placeholder": "Type of Practice"})
-  certificateNumber = StringField('Certificate Number', validators=[DataRequired()], render_kw={"placeholder": "Certificate Number"})
-  submit = SubmitField('Add Practitioner')

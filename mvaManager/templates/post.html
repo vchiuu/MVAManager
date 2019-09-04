@@ -8,7 +8,7 @@
     </div>
     <div class="col-sm-6">
       <div class="text-right">
-        <a class="btn btn-success" href="{{ url_for('new_post')}}"> + </a></td>
+        <a class="btn btn-success" href="{{ url_for('posts.new_post')}}"> + </a></td>
       </div>
     </div>
   </div>
@@ -21,7 +21,7 @@
         <small class="text-muted">{{ post.date_posted.strftime('%m-%d-%Y') }}</small>
         {% if post.author == current_user %}
           <div>
-            <a class="btn btn-secondary btn-sm m-1" href="{{ url_for('updatepost', post_id=post.id) }}"> Update </a>
+            <a class="btn btn-secondary btn-sm m-1" href="{{ url_for('posts.updatepost', post_id=post.id) }}"> Update </a>
             <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal"> Delete </button>
 
           </div>
@@ -45,7 +45,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-            <form action="{{ url_for('deletepost', post_id=post.id) }}" method="POST">
+            <form action="{{ url_for('posts.deletepost', post_id=post.id) }}" method="POST">
               <input class="btn btn-danger" type="submit" value="Delete">
             </form>
           </div>
