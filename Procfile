@@ -1,1 +1,1 @@
-web: gunicorn current_app: mvaManager
+web: gunicorn mvaManager: current_app
