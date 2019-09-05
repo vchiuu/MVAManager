@@ -1,5 +1,5 @@
-from flask import render_template, Blueprint
-from mvaManager import app, db, bcrypt, mail
+from flask import render_template, Blueprint, current_app
+from mvaManager import db, bcrypt, mail
 
 tasks = Blueprint('tasks', __name__)
 

@@ -1,5 +1,4 @@
-from flask import render_template, Blueprint
-from mvaManager import app
+from flask import render_template, Blueprint, current_app
 
 reports = Blueprint('reports', __name__)
 
