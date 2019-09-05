@@ -1,1 +1,1 @@
-web: gunicorn mvaManager:run
+web: gunicorn run:mvaManager
