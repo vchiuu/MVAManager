@@ -28,6 +28,7 @@ def create_app(config_class=Config):
   from mvaManager.reports.routes import reports
   from mvaManager.tasks.routes import tasks
   from mvaManager.patients.routes import patients
+  from mvaManager.errors.handlers import errors
   app.register_blueprint(users)
   app.register_blueprint(posts)
   app.register_blueprint(main)
@@ -35,5 +36,6 @@ def create_app(config_class=Config):
   app.register_blueprint(reports)
   app.register_blueprint(tasks)
   app.register_blueprint(patients)
+  app.register_blueprint(errors)
 
   return app
