@@ -38,3 +38,11 @@ Create & Activate your Virtual Environment
 ``` 
 env\Scripts\activate
 ```
+Reset Local SQLite DB
+```
+(env) PS C:\location python
+>>> from mvaManager import db, create_app
+>>> db.create_all(app=create_app())
+>>> db.drop_all(app=create_app())
+>>> exit()
+```
