@@ -12,13 +12,16 @@ If the patient requires further treatment after the first 12 weeks of treatment,
 * OCF-18 Treatment and Assessment Plan
 
 ## Motor Vehicle Accident Treatment Rates & Billing 
-| Treatment Stage | Duration    | Typical Number of Appointments | Details                         |
-| :-------------: | :---------: | :----------------------------: | :-----------------------------: |
-|     Block 1     |   4 weeks   |  2 appointments/week           | After the date of incident      |
-|     Block 2     |   4 weeks   |  1 appointment/week            | After the completion of Block 1 |
-|     Block 3     |   4 weeks   |  1 appointment/week            | After the complete of Block 2   | 
-|    Extended     | (as needed) |  (as needed)                   | After approval of OCF-18        |
-
+|   Treatment Stage   |   Duration  |    Fee    |Typical Number of Appointments | Details                         |
+|   :-------------:   | :---------: |  -------: |:----------------------------: | :-----------------------------: |
+| Initial Assessment  |  1 session  |  $ 215.00 | 1 appointment                 | Initial visit after accident    |
+|       Block 1       |   4 weeks   |  $ 775.00 | 2 appointments/week           | After the date of accident      |
+|       Block 2       |   4 weeks   |  $ 500.00 | 1 appointment/week            | After the completion of Block 1 |
+|       Block 3       |   4 weeks   |  $ 225.00 | 1 appointment/week            | After the complete of Block 2   | 
+|      Extended       | (as needed) |   ------- | (as needed)                   | After approval of OCF-18        |
+|      Discharge      |  1 session  |  $  85.00 | 1 appointment                 | End of treatment                |
+| Goods and Services  | (as needed) |  $ 400.00 | (not applicable)              | Dispensed during Blocks 1 to 3  |
+ 
 Note: During the first 12-weeks, number appointments may vary depending on the rates which the clinic decides to charge.
 The following rates apply during extended treatment or, when patient has their own Extended Health Care (EHC) Benefits.
 
