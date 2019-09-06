@@ -22,9 +22,9 @@
     <tbody>
     {% for patient in patients %}
       <tr>
-        <td> {{ patient.pLastName }} </td>
+        <td> <a href="{{ url_for('patients.patient', patient_id=patient.id) }}">{{ patient.pLastName }}</a></td>
         <td> {{ patient.pFirstName }}</td>
-        <td> {{ patient.pDOB }}</td>
+        <td> {{ patient.pDOB.strftime('%m-%d-%Y') }}</td>
         <td> {{ patient.pClaimNumber }}</td>
       </tr>
     {% endfor %}

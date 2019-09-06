@@ -10,7 +10,7 @@ posts = Blueprint('posts', __name__)
 def clinicboard():
   page = request.args.get('page', 1, type=int)
   posts = Post.query.order_by(Post.date_posted.desc()).paginate(page=page,per_page=10)
-  return render_template('clinicboard.html', title='ClinicBoard', posts=posts)
+  return render_template('clinicboard/clinicboard.html', title='ClinicBoard', posts=posts)
 
 @posts.route('/clinicboard/newpost', methods=['GET', 'POST'])
 @login_required
@@ -22,12 +22,12 @@ def new_post():
     db.session.commit()
     flash('Post created!', 'success')
     return redirect( url_for('posts.clinicboard'))
-  return render_template('createpost.html', title='New Post', form=form, legend='New Post')
+  return render_template('clinicboard/createpost.html', title='New Post', form=form, legend='New Post')
 
 @posts.route('/clinicboard/<int:post_id>')
 def post(post_id):
   post = Post.query.get_or_404(post_id)
-  return render_template('post.html', title=post.title, post=post)
+  return render_template('clinicboard/post.html', title=post.title, post=post)
 
 @posts.route('/clinicboard/<int:post_id>/update', methods=['GET', 'POST'])
 @login_required
@@ -45,7 +45,7 @@ def updatepost(post_id):
   elif request.method == 'GET':
     form.title.data = post.title
     form.content.data = post.content
-  return render_template('createpost.html', title='Update Post', form=form, legend='Update Post')
+  return render_template('clinicboard/createpost.html', title='Update Post', form=form, legend='Update Post')
 
 @posts.route('/clinicboard/<int:post_id>/delete', methods=['POST'])
 @login_required

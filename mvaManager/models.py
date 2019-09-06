@@ -54,6 +54,7 @@ class Patient(db.Model):
   pIncidentDate = db.Column(db.DateTime, nullable=False)
   pClaimNumber = db.Column(db.Integer, nullable=False)
   pScheduleID = db.Column(db.Integer, unique=True, nullable=False)
+  pNotes = db.Column(db.Text)
 
 
 class Practitioner(db.Model):

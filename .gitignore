@@ -100,8 +100,8 @@ celerybeat-schedule
 # Environments
 .env
 .venv
-env/
 envFlaskApp/
+env/
 venv/
 ENV/
 env.bak/

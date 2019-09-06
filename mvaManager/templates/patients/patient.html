@@ -1,0 +1,125 @@
+{% extends "layout.html" %}
+{% block content %}
+  <br>
+  <div class="row">
+    <div class="col-md-12">
+      <h1 style="text-align: center"> {{ patient.pFirstName }} {{ patient.pLastName}}</h1>
+    </div>
+  </div>
+  <hr>
+<fieldset class="form-group">
+  <div class="row">
+      <div class="col-md-4">
+        <small>First Name: </small>
+      </div>
+      <div class="col-md-4">
+        <small>Last Name: </small>
+      </div>
+      <div class="col-md-4">
+        <small>Date of Birth: </small>
+      </div>
+    </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <div>{{ patient.pFirstName }}</div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <div> {{ patient.pLastName }}</div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <div> {{ patient.pDOB.strftime('%m-%d-%Y') }} </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <small>Phone Number: </small>
+    </div>
+    <div class="col-md-6">
+      <small>Email: </small>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <div>{{ patient.pPhone }}</div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <div> {{ patient.pEmailAddress }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <small>Date of Accident: </small>
+    </div>
+    <div class="col-md-4">
+      <small>Claim Number: </small>
+    </div>
+    <div class="col-md-4">
+        <small>Schedule ID: </small>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group">
+        <div>{{ patient.pIncidentDate.strftime('%m-%d-%Y') }}</div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group">
+        <div> {{ patient.pClaimNumber }}</div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div> {{ patient.pScheduleID }}</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <small> Additional Notes: </small>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <small> {{ patient.pNotes }} </small>
+    </div>
+  </div>
+</fieldset>
+  <row>
+    <div class="col-sm-12">
+      <div class="text-center">
+        <a class="btn btn-primary btn-sm m-1" href="{{ url_for('patients.updatepatient', patient_id=patient.id) }}"> Edit </a>
+        <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal"> Delete </button></td>
+      </div>
+    </div>
+  </row>
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="deleteModalLabel">Delete Patient?</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            You are about to delete this patient. Are you sure?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+            <form action="{{ url_for('patients.deletepatient', patient_id=patient.id) }}" method="POST">
+              <input class="btn btn-danger" type="submit" value="Delete">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endblock content %} 
