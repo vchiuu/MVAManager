@@ -14,4 +14,4 @@ class newPatientForm(FlaskForm):
   pClaimNumber = IntegerField('Claim Number', validators=[DataRequired()])
   pScheduleID = IntegerField('Schedule ID', validators=[DataRequired()])
   pNotes = TextAreaField('Additional Notes', render_kw={"placeholder": "Additional Patient Notes"})
-  submit = SubmitField('Add Patient')
+  submit = SubmitField('Submit')

@@ -1,0 +1,24 @@
+{% extends "settings.html" %}
+  {% block settings %}
+  <br>
+  <table class="table">
+    <thead>
+      <tr>
+        <td> <h3> Practitioners </h3></td>
+        <td style="text-align:right"> <a class="btn btn-success" href="{{ url_for('settings.addpractitioner')}}"> + </a></td>
+      </tr>
+      <tr>
+        <th scope="col"> Practitioner </td>
+        <th scope="col"> Practice </td>
+      </tr>
+    </thead>
+    <tbody>
+  {% for practitioner in practitioners %}
+    <tr>
+      <td> <a href="{{ url_for('settings.practitioner', practitioner_id=practitioner.id) }}"> {{ practitioner.firstName }} {{ practitioner.lastName }}</a></td>
+      <td> {{ practitioner.practice }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+  {% endblock %}

@@ -17,7 +17,7 @@ def addPatient():
   if form.validate_on_submit():
     patient = Patient(pFirstName = form.pFirstName.data, pLastName= form.pLastName.data, pDOB=form.pDOB.data, 
                       pPhone=form.pPhone.data, pEmailAddress=form.pEmailAddress.data, pIncidentDate=form.pIncidentDate.data,
-                      pClaimNumber=form.pClaimNumber.data, pScheduleID=form.pScheduleID.data)
+                      pClaimNumber=form.pClaimNumber.data, pScheduleID=form.pScheduleID.data, pNotes=form.pNotes.data)
     db.session.add(patient)
     db.session.commit()
     flash('Patient has been added.', 'success')
@@ -43,9 +43,10 @@ def updatepatient(patient_id):
     patient.pIncidentDate = form.pIncidentDate.data
     patient.pClaimNumber = form.pClaimNumber.data
     patient.pScheduleID = form.pScheduleID.data
+    patient.pNotes = form.pNotes.data
     db.session.commit()
     flash('Patient information has been updated', 'success')
-    return redirect( url_for('patientslist.patient', patient_id=patient.id))
+    return redirect( url_for('patients.patient', patient_id=patient.id))
   elif request.method == 'GET':
     form.pFirstName.data = patient.pFirstName
     form.pLastName.data = patient.pLastName
@@ -55,6 +56,7 @@ def updatepatient(patient_id):
     form.pIncidentDate.data = patient.pIncidentDate
     form.pClaimNumber.data = patient.pClaimNumber
     form.pScheduleID.data = patient.pScheduleID
+    form.pNotes.data = patient.pNotes
   return render_template('patients/addpatient.html', title='Update Patient', form=form, legend='Update Patient')
 
 @patients.route('/patients/<int:patient_id>/delete', methods=['POST'])
