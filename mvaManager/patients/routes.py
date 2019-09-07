@@ -2,7 +2,8 @@ from flask import render_template, url_for, flash, redirect, request, Blueprint
 from flask_login import login_required
 from mvaManager import db
 from mvaManager.patients.forms import newPatientForm
-from mvaManager.models import Patient
+from mvaManager.models import Patient, BillingSchedule
+import datetime
 
 patients = Blueprint('patients', __name__)
 
@@ -18,7 +19,8 @@ def addPatient():
     patient = Patient(pFirstName = form.pFirstName.data, pLastName= form.pLastName.data, pDOB=form.pDOB.data, 
                       pPhone=form.pPhone.data, pEmailAddress=form.pEmailAddress.data, pIncidentDate=form.pIncidentDate.data,
                       pClaimNumber=form.pClaimNumber.data, pScheduleID=form.pScheduleID.data, pNotes=form.pNotes.data)
-    db.session.add(patient)
+    billingschedule = BillingSchedule()
+    db.session.add(patient, billingschedule)
     db.session.commit()
     flash('Patient has been added.', 'success')
     return redirect( url_for('patients.patientslist'))

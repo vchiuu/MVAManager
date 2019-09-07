@@ -55,7 +55,7 @@ class Patient(db.Model):
   pClaimNumber = db.Column(db.Integer, nullable=False)
   pScheduleID = db.Column(db.Integer, unique=True, nullable=False)
   pNotes = db.Column(db.Text)
-
+  billingschedule = db.relationship('BillingSchedule', backref='patient', lazy=True)
 
 class Practitioner(db.Model):
   id = db.Column(db.Integer, primary_key=True)
@@ -88,12 +88,16 @@ class Paperwork(db.Model):
   isComplete = db.Column(db.Boolean)
 
 class BillingSchedule(db.Model):
+  __tablename__ = 'billingschedule'
   id = db.Column(db.Integer, primary_key=True)
   endBlock1 = db.Column(db.DateTime)
   endBlock2 = db.Column(db.DateTime)
   endBlock3 = db.Column(db.DateTime)
-  extensionID = db.Column(db.Integer)
+  extensions = db.relationship('ExtendedBillingSchedule', backref='schedule', lazy=True)
+  patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'), nullable=False)
 
 class ExtendedBillingSchedule(db.Model):
+  __tablename__ = 'ExtendedBillingSchedule'
   id = db.Column(db.Integer, primary_key=True)
   amountApproved = db.Column(db.Integer, nullable=False)
+  billingschedule_id = db.Column(db.Integer, db.ForeignKey('billingschedule.id'), nullable=False)

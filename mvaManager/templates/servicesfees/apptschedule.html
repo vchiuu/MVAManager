@@ -1,0 +1,18 @@
+{% extends "settings.html" %}
+  {% block settings %}
+  <h3> Appointment Schedule </h3>
+  <table class="table">
+    <thead>
+      <td> Treatment Stage</td>
+      <td> Duration </td>
+      <td> Number of Appointments </td>
+    </thead>
+    <tbody>
+      {% for appointmentschedule in appointmentschedules %}
+      <td> {{ appointmentschedule.treatmentStage}}</td>
+      <td> {{ appointmentschedule.duration}}</td>
+      <td> {{ appointmentschedule.numberOfAppointments}} </td>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endblock %}
