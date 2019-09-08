@@ -56,6 +56,8 @@ class Patient(db.Model):
   pScheduleID = db.Column(db.Integer, unique=True, nullable=False)
   pNotes = db.Column(db.Text)
   billingschedule = db.relationship('BillingSchedule', backref='patient', lazy=True)
+  appointments = db.relationship('Appointment', backref='patient', lazy=True)
+  forms = db.relationship('Paperwork', backref='patient', lazy=True)
 
 class Practitioner(db.Model):
   id = db.Column(db.Integer, primary_key=True)
@@ -65,8 +67,10 @@ class Practitioner(db.Model):
   certificateNumber = db.Column(db.String(10), nullable=False)
 
 class TreatmentType(db.Model):
+  __tablename__ = 'treatmenttype'
   id = db.Column(db.Integer, primary_key=True)
   trtType = db.Column(db.String(15), primary_key=True)
+  appointment = db.relationship('Appointment', backref='treatmenttype', lazy=True)
 
 class AppointmentsByBlock(db.Model):
   blockNumber = db.Column(db.Integer, primary_key=True)
@@ -79,6 +83,8 @@ class Practice(db.Model):
 class Appointment(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   appointmentDate = db.Column(db.DateTime, nullable=False)
+  patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'), nullable=False)
+  treatment_type = db.Column(db.Integer, db.ForeignKey('treatmenttype.id'), nullable=False)
 
 class Paperwork(db.Model):
   id = db.Column(db.Integer, primary_key=True)
@@ -86,6 +92,7 @@ class Paperwork(db.Model):
   formName = db.Column(db.String(30), nullable=False)
   isRequired = db.Column(db.Boolean)
   isComplete = db.Column(db.Boolean)
+  patient_id = db.Column(db.Integer, db.ForeignKey('patient.id'), nullable=False)
 
 class BillingSchedule(db.Model):
   __tablename__ = 'billingschedule'

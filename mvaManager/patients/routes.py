@@ -16,11 +16,17 @@ def patientslist():
 def addPatient():
   form = newPatientForm()
   if form.validate_on_submit():
-    patient = Patient(pFirstName = form.pFirstName.data, pLastName= form.pLastName.data, pDOB=form.pDOB.data, 
-                      pPhone=form.pPhone.data, pEmailAddress=form.pEmailAddress.data, pIncidentDate=form.pIncidentDate.data,
-                      pClaimNumber=form.pClaimNumber.data, pScheduleID=form.pScheduleID.data, pNotes=form.pNotes.data)
-    billingschedule = BillingSchedule()
-    db.session.add(patient, billingschedule)
+    patient = Patient(
+      pFirstName = form.pFirstName.data, 
+      pLastName= form.pLastName.data, 
+      pDOB=form.pDOB.data, 
+      pPhone=form.pPhone.data, 
+      pEmailAddress=form.pEmailAddress.data, 
+      pIncidentDate=form.pIncidentDate.data,
+      pClaimNumber=form.pClaimNumber.data, 
+      pScheduleID=form.pScheduleID.data, 
+      pNotes=form.pNotes.data)
+    db.session.add(patient)
     db.session.commit()
     flash('Patient has been added.', 'success')
     return redirect( url_for('patients.patientslist'))
@@ -29,7 +35,10 @@ def addPatient():
 @patients.route('/patients/<int:patient_id>')
 def patient(patient_id):
   patient = Patient.query.get_or_404(patient_id)
-  return render_template('patients/patient.html', title=(patient.pFirstName + patient.pLastName), patient=patient)
+  schedules = BillingSchedule.query.get(patient_id)
+  return render_template('patients/patient.html',
+    title=(patient.pFirstName + patient.pLastName),
+    patient=patient, billingschedules=schedules)
 
 @patients.route('/patients/<int:patient_id>/update', methods=['GET', 'POST'])
 @login_required
@@ -61,9 +70,25 @@ def updatepatient(patient_id):
     form.pNotes.data = patient.pNotes
   return render_template('patients/addpatient.html', title='Update Patient', form=form, legend='Update Patient')
 
+@patients.route('/patients/<int:patient_id>/addbillingschedule', methods=['POST'])
+@login_required
+def addbillingschedule(patient_id):
+  patient = Patient.query.get_or_404(patient_id)
+  billingschedule = BillingSchedule (
+    endBlock1 = patient.pIncidentDate + datetime.timedelta(days=28), 
+    endBlock2 = patient.pIncidentDate + datetime.timedelta(days=56),
+    endBlock3 = patient.pIncidentDate + datetime.timedelta(days=84), 
+    patient_id = patient.id
+  )
+  db.session.add(billingschedule)
+  db.session.commit()
+  return redirect( url_for('patients.patient', patient_id = patient.id))
+  
 @patients.route('/patients/<int:patient_id>/delete', methods=['POST'])
 @login_required
 def deletepatient(patient_id):
+  billingschedule = BillingSchedule.query.get_or_404(patient_id)
+  db.session.delete(billingschedule)
   patient = Patient.query.get_or_404(patient_id)
   db.session.delete(patient)
   db.session.commit()
