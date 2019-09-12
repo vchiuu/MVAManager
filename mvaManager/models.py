@@ -72,9 +72,10 @@ class TreatmentType(db.Model):
   trtType = db.Column(db.String(15), primary_key=True)
   appointment = db.relationship('Appointment', backref='treatmenttype', lazy=True)
 
-class AppointmentsByBlock(db.Model):
-  blockNumber = db.Column(db.Integer, primary_key=True)
-  numofAppointments = db.Column(db.Integer, nullable=False)
+class AppointmentSchedule(db.Model):
+  treatmentStage = db.Column(db.Integer, primary_key=True)
+  duration = db.Column(db.Integer, nullable=False)
+  numberOfAppointments = db.Column(db.Integer, nullable=False)
 
 class Practice(db.Model):
   id = db.Column(db.Integer, primary_key=True)
@@ -108,3 +109,4 @@ class ExtendedBillingSchedule(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   amountApproved = db.Column(db.Integer, nullable=False)
   billingschedule_id = db.Column(db.Integer, db.ForeignKey('billingschedule.id'), nullable=False)
+  

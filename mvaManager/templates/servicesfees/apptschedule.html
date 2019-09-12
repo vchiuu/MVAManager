@@ -1,11 +1,18 @@
 {% extends "settings.html" %}
   {% block settings %}
-  <h3> Appointment Schedule </h3>
+  <br>
   <table class="table">
     <thead>
-      <td> Treatment Stage</td>
-      <td> Duration </td>
-      <td> Number of Appointments </td>
+      <tr>
+        <td> <h3> Appointment Schedule </h3> </td>
+        <td></td>
+        <td style="text-align:right"> <a class="btn btn-primary" href="#"> Edit </a></td>
+      </tr>
+      <tr>
+        <th> Treatment Stage</th>
+        <th> Duration </th>
+        <th> Number of Appointments </th>
+      </tr>
     </thead>
     <tbody>
       {% for appointmentschedule in appointmentschedules %}

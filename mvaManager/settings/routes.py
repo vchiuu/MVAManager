@@ -2,7 +2,7 @@
 from flask import render_template, url_for, flash, redirect, request, Blueprint
 from mvaManager import db
 from mvaManager.settings.forms import newPractitionerForm
-from mvaManager.models import Practitioner
+from mvaManager.models import Practitioner, AppointmentSchedule
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_mail import Message
 
@@ -62,3 +62,12 @@ def deletepractitioner(practitioner_id):
   db.session.commit()
   flash('Practitioner has been deleted', 'success')
   return redirect(url_for('settings.practitioners'))
+
+@settings.route('/settings/appointmentschedule')
+@login_required
+def appointmentschedule():
+  appointmentschedule = AppointmentSchedule.query.all()
+  return render_template(
+    'servicesfees/apptschedule.html', 
+    title="Appointment Schedule", 
+    appointmentschedule=appointmentschedule)

@@ -38,7 +38,7 @@ def patient(patient_id):
   schedules = BillingSchedule.query.get(patient_id)
   return render_template('patients/patient.html',
     title=(patient.pFirstName + patient.pLastName),
-    patient=patient, billingschedules=schedules)
+    patient=patient, billingschedule=schedules)
 
 @patients.route('/patients/<int:patient_id>/update', methods=['GET', 'POST'])
 @login_required
@@ -87,11 +87,19 @@ def addbillingschedule(patient_id):
 @patients.route('/patients/<int:patient_id>/delete', methods=['POST'])
 @login_required
 def deletepatient(patient_id):
-  billingschedule = BillingSchedule.query.get_or_404(patient_id)
+  billingschedule = BillingSchedule.query.get(patient_id)
   db.session.delete(billingschedule)
+  db.session.commit()
   patient = Patient.query.get_or_404(patient_id)
   db.session.delete(patient)
   db.session.commit()
   flash('Patient has been deleted', 'success')
   return redirect(url_for('patients.patientslist'))
-  
+
+@patients.route('/patients/<int:patient_id>/deleteschedule', methods=['POST'])
+@login_required
+def deletebillingschedule(patient_id):
+  billingschedule = BillingSchedule.query.get(patient_id)
+  db.session.delete(billingschedule)
+  db.session.commit()
+  return redirect(url_for('patients.patient', patient_id=patient_id))  
